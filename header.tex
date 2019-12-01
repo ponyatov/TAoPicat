@@ -17,6 +17,13 @@
 \definecolor{green}{rgb}{0,0.6,0}	% G
 \definecolor{blue}{rgb}{0,0,0.7}	% B
 
+% Cyrillization
+%% \usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+%% \usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+
 % relative sectioning
 \usepackage{ifthen}
 \newcounter{secdepth}\setcounter{secdepth}{0}
@@ -38,6 +45,7 @@
 
 %% languages
 \newcommand{\cat}{\texttt{Picat}}
+\newcommand{\pro}{\texttt{Prolog}}
 
 % [nosep] option in lists/enums
 \usepackage{enumitem}
@@ -48,3 +56,5 @@
 \renewcommand{\emph}[1]{\textcolor{red}{#1}}
 \newcommand{\term}[1]{\textcolor{green}{#1}}
 \newcommand{\note}[1]{\,\footnote{\ #1}}
+
+\newcommand{\ru}[1]{\textcolor{blue}{#1}}
