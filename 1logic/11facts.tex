@@ -1,0 +1,96 @@
+\secrel{Facts\\Факты}
+
+The simplest kind of statement is called a \term{fact}. Facts are a means of stating that a \term{relation} holds between objects. An example is
+
+\ru{Самый простой вид утверждения называется \term{фактом}. Факты обозначают существование некоторого \term{отношения} между объектами. Примером является}
+
+\lst{1logic/father.pl}{1logic/father.pl}
+
+\lst{1logic/father.pi}{1logic/father.pi}
+
+For an extensional relation that contains a large number of tuples, it is tedious to define such a
+relation as a predicate with \cat\ pattern-matching rules. It is worse if the relation has multiple keys.
+
+\ru{Для экстенсионального отношения, которое содержит большое количество кортежей, 
+утомительно определять такое отношение как предикат \cat\ через правила сопоставления с образцом.
+Хуже, если такое отношение имеет несколько ключей.}
+
+In order to facilitate the definition of extensional relations, \cat\ allows the inclusion of 
+\term{predicate facts}\ in the form $p(t_1,..,t_n)$ in predicate definitions. 
+
+\ru{Чтобы упростить определение экстенсиональных отношений, \cat\ позволяет включить 
+\term{предикатные факты}\ в форме $p(t_1, .., t_n)$ в определения предикатов.}
+
+% Facts and rules cannot co-exist in predicate
+% definitions and facts must be ground. A predicate definition that consists of facts can be preceded
+% by an \term{index declaration} in the form
+
+% \ru{Факты и правила не могут сосуществовать в определениях предикатов, а факты должны быть обоснованы.
+% Определению предиката, состоящему из фактов, может предшествовать \term{декларация индекса} в форме}
+
+% \[ index (M_{11}, M_{12},.., M_{1n}) ... (M_{m1}, M_{m2},.., M_{mn}) \]
+
+% \noindent
+% where each $M_{ij}$ is either $+$ (meaning \textit{indexed}) or $-$ (meaning \textit{not indexed}). If no index declaration
+% is given, then \cat\ assumes that no arguments are indexed. Facts are translated into pattern-matching rules before they are compiled.
+
+% \noindent
+% \ru{где каждый $M_{ij}$ либо $+$ (что означает \textit{индексирован}), либо $-$ (что означает \textit{не индексирован}). 
+% Если объявление индекса не задано, \cat\ предполагает, что ни один аргумент не проиндексирован. 
+% Факты переводятся в правила сопоставления с образцом до их компиляции.}
+
+\bigskip
+The fact says that Abraham is the father of Isaac, or that the relation \verb`father` holds between the 
+individuals named \verb`abraham` and \verb`isaac`. Another name for a relation is a \term{predicate}.
+Names of individuals are known as \term{atoms}. 
+
+\ru{Факт говорит о том, что Авраам является отцом Исаака, или что существует 
+отношение \texttt{father}\ между именами \texttt{abraham}\ и \texttt{isaac}.
+Другое имя для отношения\ --- это \term{предикат}. Имена перечисленных людей известны как \term{атомы}.}
+
+\clearpage
+Similarly, \verb`plus(2,3,5)` expresses the relation 
+then 2 plus 3 is 5. The familiar \verb`plus` relation can be realized via a set of facts that defines 
+the addition table. An initial segment fo the table is
+
+\ru{Аналогично, \texttt{plus(2,3,5)}\ выражает отношение, в котором 2 плюс 3 равно 5. 
+Знакомое отношения \texttt{plus}\ может быть реализовано с помощью набора фактов, 
+определяющих таблицу сложения. Начальный сегмент таблицы}
+
+\lst{1logic/plus.pl}{1logic/plus.pl}
+
+\lst{1logic/plus.pi}{1logic/plus.pi}
+
+\lst{1logic/plus.pi.log}{1logic/plus.pi.log}
+
+In contrast with \pro, \cat\ has two types of predicates: \term{backtracking} and \term{non-backtracking}.
+It also able to do calculations in imperative style with infix syntax, and don't need to unify with temp variables.
+
+\ru{
+В отличие от \pro, в \cat\ есть два типа предикатов: с \term{бэктрекингом} и без. 
+Он также способен выполнять вычисления в императивном стиле с инфиксным синтаксисом и не требует \term{унификации} с временными переменными.
+}
+
+The source code sample shown above has two \verb`main` sections. 
+The first one is \textit{backtracking}\ \verb`?=>` it first \term{matches} every \verb`plus` \term{pattern}
+with \term{variables} bound to values, then \verb`writef` outputs current variables values, 
+and do infix computation \verb`X+Y` to check the result.
+The \verb`fail` statement breaks forward pass and triggers backtracking to the next predicate match.
+
+\ru{Приведенный выше пример исходного кода состоит из двух секций \texttt{main}. 
+Первая с возвратами\ \texttt{?=>} сначала \term{шаблон} \texttt{plus} \term{сопоставляется} к каждым фактом
+с \term{привязкой} переменных к значениям, затем \texttt{writef} выводит текущие значения переменных
+и выполняет инфиксное вычисление \texttt{X+Y}, чтобы проверить результат.
+Выражение \texttt{fail}\ прерывает прямой проход вычисления, 
+запускает возврат бэктрекинга и поиск следующего совпадения предиката.}
+
+When backtracking passes all facts, it stops, and the second main runs without backtracking
+and return true to notify that program run without errors.
+
+\ru{Когда бэктрекинг проходит все факты, он останавливается, и выполняется вторая секция
+\texttt{main}\ --- она возвращает \texttt{true}, сообщая, что программа отработала без ошибок.}
+
+\bigskip
+As \cat\ \textit{has no queries syntax} in source code files, we need to explicitly use the \verb`main` predicate to run the computation.
+
+\ru{Поскольку у Picat \emph{нет синтаксиса запросов} в файлах исходного кода, нам нужно явно использовать предикат \texttt{main}\ для запуска вычислений.}

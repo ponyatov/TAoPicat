@@ -1,0 +1,3 @@
+father(abraham,isaac).
+
+main => father(X,Y),printf("%w,%w\n",X,Y).
